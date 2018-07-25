@@ -1,0 +1,22 @@
+{
+  "name": "isac",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/mkdirp": "^0.5.2",
+    "@types/request": "^2.47.1",
+    "@types/request-promise-native": "^1.0.15",
+    "@types/rimraf": "^2.0.2",
+    "typescript": "^2.9.2"
+  },
+  "dependencies": {
+    "mkdirp": "^0.5.1",
+    "request": "^2.87.0",
+    "request-promise-native": "^1.0.5",
+    "rimraf": "^2.6.2"
+  },
+  "scripts": {
+    "build": "./scripts/build.sh"
+  }
+}
