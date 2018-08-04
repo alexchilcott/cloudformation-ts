@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import program = require("commander");
 import { Generator } from "./generator/generator";
 
