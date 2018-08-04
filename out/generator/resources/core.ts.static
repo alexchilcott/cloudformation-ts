@@ -1,0 +1,18 @@
+import { AwsResourceTypeDefinition } from './resource-types';
+
+export type CFString = string;
+export type CFBoolean = boolean;
+export type CFJson = object;
+export type CFList<T> = T[];
+export type CFMap<T> = { [key: string]: T };
+export type CFInteger = number;
+export type CFDouble = number;
+export type CFLong = number;
+export type CFTimestamp = string;
+
+export interface CloudFormationTemplate {
+  AWSTemplateFormatVersion: "2010-09-09";
+  Description?: string;
+  Metadata?: Metadata;
+  Resources: {[key: string]: AwsResourceTypeDefinition};
+}
