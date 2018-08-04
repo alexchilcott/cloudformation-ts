@@ -12,9 +12,9 @@ export class Generator {
     rimraf.sync(outdir);
     mkdirp.sync(outdir);
 
-    const scriptRoot = path.dirname(process.argv[1]);
+    const generatorPath = __dirname;
     copyFileSync(
-      path.join(scriptRoot, "generator", "resources", "core.ts.static"),
+      path.join(generatorPath, "resources", "core.ts.static"),
       path.join(outdir, "core.ts")
     );
 
