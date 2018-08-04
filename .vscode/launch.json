@@ -8,10 +8,12 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}/out/generator/generator.js",
+      "program": "${workspaceFolder}/out/main.js",
+      "args": ["--outputDir", "${workspaceFolder}/generated/"],
       "outFiles": ["${workspaceFolder}/**/*.js"],
       "cwd": "${workspaceFolder}/",
-      "preLaunchTask": "build"
+      "preLaunchTask": "build",
+      "console": "integratedTerminal"
     }
   ]
 }

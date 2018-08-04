@@ -7,29 +7,24 @@ import { ModuleWriter } from "./module-writer";
 import { copyFileSync } from "fs";
 import * as path from "path";
 
-const main = async () => {
-  const scriptRoot = path.dirname(process.argv[1]);
-  const outputRoot = process.cwd();
-  const outdir = path.join(outputRoot, "generated");
-  rimraf.sync(outdir);
-  mkdirp.sync(outdir);
+export class Generator {
+  async generate(specFileUrl: string, outdir: string) {
+    rimraf.sync(outdir);
+    mkdirp.sync(outdir);
 
-  copyFileSync(
-    path.join(scriptRoot, "resources", "core.ts.static"),
-    path.join(outdir, "core.ts")
-  );
+    const scriptRoot = path.dirname(process.argv[1]);
+    copyFileSync(
+      path.join(scriptRoot, "generator", "resources", "core.ts.static"),
+      path.join(outdir, "core.ts")
+    );
 
-  const specUrl =
-    "https://d1uauaxba7bl26.cloudfront.net/latest/gzip/CloudFormationResourceSpecification.json";
+    const specUrl = specFileUrl;
 
-  const spec: ISpec = await request.get(specUrl, { gzip: true, json: true });
-  const modules = mapSpecToModules(spec);
-  const moduleWriter = new ModuleWriter();
-  for (const mod of modules) {
-    moduleWriter.writeModule(mod, outdir);
+    const spec: ISpec = await request.get(specUrl, { gzip: true, json: true });
+    const modules = mapSpecToModules(spec);
+    const moduleWriter = new ModuleWriter();
+    for (const mod of modules) {
+      moduleWriter.writeModule(mod, outdir);
+    }
   }
-};
-
-main()
-  .then(() => console.log("done"))
-  .catch(x => console.error(x));
+}
