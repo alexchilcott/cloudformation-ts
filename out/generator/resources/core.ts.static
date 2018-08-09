@@ -10,9 +10,18 @@ export type CFDouble = number;
 export type CFLong = number;
 export type CFTimestamp = string;
 
+export type Metadata = any;
+
+export interface CloudFormationOutput {
+  Description?: string;
+  Value: any;
+  Export?: string;
+}
+
 export interface CloudFormationTemplate {
   AWSTemplateFormatVersion: "2010-09-09";
   Description?: string;
   Metadata?: Metadata;
   Resources: {[key: string]: AwsResourceTypeDefinition};
+  Outputs: {[key: string]: CloudFormationOutput}
 }
