@@ -28,7 +28,20 @@ export function GetAtt(
   };
 }
 
-export type CFString = string | AwsRefFunction | AwsGetAttFunction;
+export type AwsJoinFunction = {
+  "Fn::Join": [CFString, CFString[]];
+}
+
+export function Join(
+  delimiter: CFString,
+  ...parts: CFString[]
+): AwsJoinFunction {
+  return {
+    "Fn::Join": [delimiter, parts]
+  };
+}
+
+export type CFString = string | AwsRefFunction | AwsGetAttFunction | AwsJoinFunction;
 export type CFBoolean = boolean | AwsGetAttFunction;
 export type CFJson = object | AwsGetAttFunction;
 export type CFList<T> = T[] | AwsGetAttFunction;
