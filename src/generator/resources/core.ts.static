@@ -51,5 +51,5 @@ export interface CloudFormationTemplate {
   Description?: string;
   Metadata?: Metadata;
   Resources: { [key: string]: AwsResourceTypeDefinition };
-  Outputs: { [key: string]: CloudFormationOutput };
+  Outputs?: { [key: string]: CloudFormationOutput };
 }
