@@ -1,14 +1,42 @@
-import { AwsResourceTypeDefinition } from './resource-types';
+import { AwsResourceTypeDefinition } from "./resource-types";
 
-export type CFString = string;
-export type CFBoolean = boolean;
-export type CFJson = object;
-export type CFList<T> = T[];
-export type CFMap<T> = { [key: string]: T };
-export type CFInteger = number;
-export type CFDouble = number;
-export type CFLong = number;
-export type CFTimestamp = string;
+export type AwsRefFunction = {
+  Ref: string;
+};
+
+export function Ref(key: string): AwsRefFunction {
+  return {
+    Ref: key
+  };
+}
+
+export type AwsGetAttFunction = {
+  "Fn::GetAtt": CFString[];
+};
+
+export function GetAtt(
+  logicalNameOfResource: CFString,
+  attributeName: CFString,
+  ...extraAttributeNameParts: CFString[]
+): AwsGetAttFunction {
+  return {
+    "Fn::GetAtt": [
+      logicalNameOfResource,
+      attributeName,
+      ...extraAttributeNameParts
+    ]
+  };
+}
+
+export type CFString = string | AwsRefFunction | AwsGetAttFunction;
+export type CFBoolean = boolean | AwsGetAttFunction;
+export type CFJson = object | AwsGetAttFunction;
+export type CFList<T> = T[] | AwsGetAttFunction;
+export type CFMap<T> = { [key: string]: T } | AwsGetAttFunction;
+export type CFInteger = number | AwsGetAttFunction;
+export type CFDouble = number | AwsGetAttFunction;
+export type CFLong = number | AwsGetAttFunction;
+export type CFTimestamp = string | AwsGetAttFunction;
 
 export type Metadata = any;
 
@@ -22,6 +50,6 @@ export interface CloudFormationTemplate {
   AWSTemplateFormatVersion: "2010-09-09";
   Description?: string;
   Metadata?: Metadata;
-  Resources: {[key: string]: AwsResourceTypeDefinition};
-  Outputs: {[key: string]: CloudFormationOutput}
+  Resources: { [key: string]: AwsResourceTypeDefinition };
+  Outputs: { [key: string]: CloudFormationOutput };
 }
