@@ -306,7 +306,7 @@ export function mapSpecToModules(spec: ISpec): ModuleDefinition[] {
     [],
     [
       {
-        name: "AwsResourceTypeDefinition",
+        name: "AwsResourceDefinition",
         aliasedType: {
           typeName: resourceTypeNames.join("|"),
           requiredImports: resourceTypeImports

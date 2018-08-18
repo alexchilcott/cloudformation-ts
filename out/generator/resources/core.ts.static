@@ -1,4 +1,4 @@
-import { AwsResourceTypeDefinition } from "./resource-types";
+import { AwsResourceDefinition } from "./resource-types";
 
 export type AwsRefFunction = {
   Ref: string;
@@ -63,6 +63,6 @@ export interface CloudFormationTemplate {
   AWSTemplateFormatVersion: "2010-09-09";
   Description?: string;
   Metadata?: Metadata;
-  Resources: { [key: string]: AwsResourceTypeDefinition };
+  Resources: { [key: string]: AwsResourceDefinition };
   Outputs?: { [key: string]: CloudFormationOutput };
 }
