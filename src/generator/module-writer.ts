@@ -82,6 +82,10 @@ export class ModuleWriter {
       writer.writeLine("}");
     }
 
+    for (const exportedFunction of module.exportedFunctions || []) {
+      writer.writeLine(exportedFunction.functionBody);
+    }
+
     const modulePath = join(rootDir, module.absolutePath) + ".ts";
 
     writeFileSync(modulePath, writer.content);

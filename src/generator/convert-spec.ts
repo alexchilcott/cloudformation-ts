@@ -11,7 +11,8 @@ import {
   createModule,
   ModuleTypeReference,
   PropertyDefinition,
-  Import
+  Import,
+  TypeScriptModuleFunctionDefinition
 } from "./type-definition";
 
 const globalNamespaceSymbol = "GLOBAL_NAMESPACE";
@@ -198,15 +199,28 @@ function getModule(
   );
 
   const resourceInterfaces = [];
-  if (resourceType) {
+  const functions: TypeScriptModuleFunctionDefinition[] = [];
+  if (resourceType && typeDefinition) {
     resourceInterfaces.push(resourceType.resource);
     resourceInterfaces.push(resourceType.properties);
+    functions.push({
+      functionBody: `
+export function ${resourceType.resource.name}(properties: Properties): ${
+        resourceType.resource.name
+      } {
+  return {
+    Type: "${typeDefinition.key}",
+    Properties: properties
+  };
+}`
+    });
   }
 
   const module = createModule(
     `/${namespace || "Global"}`,
     [...resourceInterfaces, ...propertyTypeDefinitions],
-    []
+    [],
+    functions
   );
   return { module, mainResourceType: resourceType && resourceType.resource };
 }
@@ -298,7 +312,8 @@ export function mapSpecToModules(spec: ISpec): ModuleDefinition[] {
           requiredImports: resourceTypeImports
         }
       }
-    ]
+    ],
+    []
   );
   modules.push(resourceTypesModule);
   return modules;

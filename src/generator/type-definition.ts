@@ -36,6 +36,9 @@ export interface TypeScriptModuleTypeAliasDefinition {
   name: string;
   aliasedType: string;
 }
+export interface TypeScriptModuleFunctionDefinition {
+  functionBody: string;
+}
 export interface ModuleImport {
   moduleAbsolutePath: string;
   imports: { symbol: string; alias?: string }[];
@@ -45,6 +48,7 @@ export interface ModuleDefinition {
   absolutePath: string;
   exportedInterfaces: TypeScriptModuleInterfaceDefinition[];
   exportedTypeAliases: TypeScriptModuleTypeAliasDefinition[];
+  exportedFunctions: TypeScriptModuleFunctionDefinition[];
 }
 class JsonSet<T> {
   private items: Set<string> = new Set();
@@ -60,7 +64,8 @@ class JsonSet<T> {
 export function createModule(
   absolutePath: string,
   interfaces: TypeScriptInterfaceDefinition[],
-  aliases: TypeScriptTypeAliasDefinition[]
+  aliases: TypeScriptTypeAliasDefinition[],
+  functions: TypeScriptModuleFunctionDefinition[]
 ): ModuleDefinition {
   const imports: {
     [key: string]: JsonSet<{ symbol: string; alias?: string }>;
@@ -117,6 +122,7 @@ export function createModule(
 
   const exportedInterfaces = interfaces.map(mapInterface);
   const exportedTypeAliases = aliases.map(mapAlias);
+  const exportedFunctions = functions;
 
   const actualImports: ModuleImport[] = [];
   for (const importedModule in imports) {
@@ -133,6 +139,7 @@ export function createModule(
     absolutePath,
     imports: actualImports,
     exportedInterfaces,
-    exportedTypeAliases
+    exportedTypeAliases,
+    exportedFunctions
   };
 }
