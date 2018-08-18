@@ -41,7 +41,7 @@ export function Join(
   };
 }
 
-export type CFString = string | AwsRefFunction | AwsGetAttFunction;
+export type CFString = string | AwsRefFunction | AwsGetAttFunction | AwsJoinFunction;
 export type CFBoolean = boolean | AwsGetAttFunction;
 export type CFJson = object | AwsGetAttFunction;
 export type CFList<T> = T[] | AwsGetAttFunction;
